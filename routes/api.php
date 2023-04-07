@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ Route::post('/auth/register', [UserAuthController::class, 'register']);
 Route::post('/auth/login', [UserAuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('admin/students/search/{key}', [SearchController::class, 'studentSearch']);
     Route::get('admin/students', [StudentController::class, 'index']);
     Route::delete('admin/students/{id}', [StudentController::class, 'delete']);
 });
