@@ -34,6 +34,11 @@ class UserAuthController extends Controller
             'password' => 'required|string',
         ]);
 
+        $isApproved = User::where('email', $request->email)->first()->is_approved;
+        if(!$isApproved){
+            return response(['message' => 'Account is pending for admin approval'], 401);
+        }
+
         if(!auth()->attempt($data)){
             return response(['message' => 'Invalid Credentials'], 401);
         }
