@@ -15,13 +15,10 @@ use App\Http\Controllers\StudentController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/register', [UserAuthController::class, 'register']);
-Route::post('/login', [UserAuthController::class, 'login']);
-Route::get('admin/students', [StudentController::class, 'index']);
-Route::middleware('auth:passport')->get('/user', function (Request $request) {
-   
+Route::post('/auth/register', [UserAuthController::class, 'register']);
+Route::post('/auth/login', [UserAuthController::class, 'login']);
 
-    return $request->user();
-
-
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('admin/students', [StudentController::class, 'index']);
+    Route::delete('admin/students/{id}', [StudentController::class, 'delete']);
 });
