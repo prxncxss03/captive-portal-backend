@@ -15,6 +15,9 @@ class SearchController extends Controller
             ->orWhere('last_name', 'like', '%' . $key . '%')
             ->where('email', 'like', '%' . $key . '%')
             ->get();
+
+        if ($students->isEmpty())
+            return response(['message' => 'No student found'], 404);
         return response(['students' => $students], 200);
     }
 }
