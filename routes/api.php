@@ -21,6 +21,11 @@ Route::post('/auth/register', [UserAuthController::class, 'register']);
 Route::post('/auth/login', [UserAuthController::class, 'login']);
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/admin/pending-accounts', [PendingAccountController::class, 'index']);
+    Route::put('/admin/pending-accounts/{id}', [PendingAccountController::class, 'approve']);
+    Route::put('/admin/pending-accounts', [PendingAccountController::class, 'approveAll']);
+    Route::delete('/admin/pending-accounts', [PendingAccountController::class, 'rejectAll']);
+    Route::delete('/admin/pending-accounts/{id}', [PendingAccountController::class, 'reject']);
+    Route::get('admin/pending-accounts/search/{key}', [SearchController::class, 'pendingAccountsSearch']);
     Route::get('admin/students/search/{key}', [SearchController::class, 'studentSearch']);
     Route::get('admin/students', [StudentController::class, 'index']);
     Route::delete('admin/students/{id}', [StudentController::class, 'delete']);

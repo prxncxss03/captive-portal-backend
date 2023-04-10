@@ -20,4 +20,16 @@ class SearchController extends Controller
             return response(['message' => 'No student found'], 404);
         return response(['students' => $students], 200);
     }
+
+    public function pendingAccountsSearch ($key) {
+        $pendingAccounts = User::where('is_approved', false)
+            ->where('first_name', 'like', '%' . $key . '%')
+            ->orWhere('last_name', 'like', '%' . $key . '%')
+            ->where('email', 'like', '%' . $key . '%')
+            ->get();
+
+        if ($pendingAccounts->isEmpty())
+            return response(['message' => 'No pending account found'], 404);
+        return response(['pending_accounts' => $pendingAccounts], 200);
+    }
 }
