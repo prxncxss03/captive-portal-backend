@@ -21,6 +21,21 @@ class SearchController extends Controller
         return response(['students' => $students], 200);
     }
 
+    public function facultySearch ($key) {
+        $faculty = User::where('user_type', 'faculty') 
+            ->where('is_approved', true)
+            ->where('first_name', 'like', '%' . $key . '%')
+            ->orWhere('last_name', 'like', '%' . $key . '%')
+            ->where('email', 'like', '%' . $key . '%')
+            ->get();
+
+        if ($faculty->isEmpty())
+            return response(['message' => 'No faculty found'], 404);
+        return response(['faculty' => $faculty], 200);
+    }
+
+
+
     public function pendingAccountsSearch ($key) {
         $pendingAccounts = User::where('is_approved', false)
             ->where('first_name', 'like', '%' . $key . '%')
