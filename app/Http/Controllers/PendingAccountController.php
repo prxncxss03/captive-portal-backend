@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PendingAccountController extends Controller
 {
@@ -41,6 +42,12 @@ class PendingAccountController extends Controller
             $user->delete();
         }
         return response(['message' => 'All accounts rejected successfully'], 200);
+    }
+
+    public function checkAuth(){
+        $user = Auth::user();
+        return response (['user' => $user], 200);
+    
     }
 
 
