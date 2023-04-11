@@ -46,17 +46,14 @@ class SettingsController extends Controller
             ], 400);
         }
 
-        if (Hash::check($request->old_password, $user->password)) {
-            $user->password = bcrypt($request->new_password);
-            $user->save();
-            return response()->json($user);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Old password is incorrect',
-                'data' => ''
-            ], 400);
-        }
+        
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Password reset successfully',
+        ], 200);
+    
 
     }
 }
