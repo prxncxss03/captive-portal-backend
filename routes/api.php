@@ -9,7 +9,7 @@ use App\Http\Controllers\PendingAccountController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Response;
-use App\Models\User;
+use App\Http\Controllers\WebContentFilter;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,25 +23,7 @@ use App\Models\User;
 */
 Route::post('/auth/register', [UserAuthController::class, 'register']);
 Route::post('/auth/login', [UserAuthController::class, 'login']);
-Route::get('/user/setting/{id}',[SettingsController::class, function($id){
-    $user = User::where('id', $id)->first();
-    if($user){
-        return response(['user' => $user], 200);
-    }
-    else{
-        return response(['message' => 'User not found'], 404);
-    }
-
-
-}]);
-
-
-
-Route::get('hello', [SettingsController::class, 'index']);
-
-Route::get('test', function () {
-    return response(['message' => 'test'], 200);
-});
+Route::post('/admin/web-content-filter', [WebContentFilter::class, 'addWebsite']);
 
 Route::group(['middleware' => ['auth:api']], function () {
     //admin routes
@@ -61,9 +43,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('/user/setting/update-password/{id}',[SettingsController::class, 'resetPassword']);
 
     Route::get('/auth/check-auth', [PendingAccountController::class, 'checkAuth']);
-
-   
-
 
 });
 
