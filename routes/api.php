@@ -23,7 +23,7 @@ use App\Http\Controllers\WebContentFilter;
 */
 Route::post('/auth/register', [UserAuthController::class, 'register']);
 Route::post('/auth/login', [UserAuthController::class, 'login']);
-Route::post('/admin/web-content-filter', [WebContentFilter::class, 'addWebsite']);
+
 
 Route::group(['middleware' => ['auth:api']], function () {
     //admin routes
@@ -41,6 +41,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('admin/faculty/search/{key}', [SearchController::class, 'facultySearch']);
     Route::put('/user/setting/update/{id}',[SettingsController::class, 'editInformation']);
     Route::put('/user/setting/update-password/{id}',[SettingsController::class, 'resetPassword']);
+
+    Route::get('/admin/web-content-filter', [WebContentFilter::class, 'index']);
+    Route::post('/admin/web-content-filter', [WebContentFilter::class, 'addWebsite']);
 
     Route::get('/auth/check-auth', [PendingAccountController::class, 'checkAuth']);
 

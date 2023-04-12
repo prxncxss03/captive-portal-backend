@@ -15,13 +15,13 @@ class WebContentFilter extends Controller
 
     public function addWebsite (Request $request){
 
-        $webpage = Webpage::create([
+        $webpages = Webpage::create([
             'url' => $request->url,
             'name' => $request->name,
             'category' => $request->category,
         ]);
-        
-        return response(['message' => 'Website added successfully'], 200);
+
+        return response()->json($webpages);
 
     }
 
