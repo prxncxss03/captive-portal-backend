@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'operating_system_id',
         'first_name',
         'last_name',
         'user_type',   
@@ -43,4 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function operating_system(){
+        return $this->belongsTo(OperatingSystem::class, 'operating_system_id');
+    }
+
+    public function many_operating_systems(){
+        return $this->belongsToMany(OperatingSystem::class, 'user_operating_systems', 'user_id', 'operating_system_id');
+    }
 }

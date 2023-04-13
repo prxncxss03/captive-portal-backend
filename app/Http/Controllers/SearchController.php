@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Webpage;
 
 class SearchController extends Controller
 {
@@ -46,5 +47,16 @@ class SearchController extends Controller
         if ($pendingAccounts->isEmpty())
             return response(['message' => 'No pending account found'], 404);
         return response(['pending_accounts' => $pendingAccounts], 200);
+    }
+
+    public function blockedWebsiteSearch ($key) {
+        $blockedWebsites = Webpage::where('name', 'like', '%' . $key . '%')
+            ->orWhere('category', 'like', '%' . $key . '%')
+            ->orWhere('url', 'like', '%' . $key . '%')
+            ->get();
+
+        if ($blockedWebsites->isEmpty())
+            return response(['message' => 'No blocked website found'], 404);
+        return response(['blocked_websites' => $blockedWebsites], 200);
     }
 }

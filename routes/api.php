@@ -10,6 +10,7 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\WebContentFilter;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +45,13 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::get('/admin/web-content-filter', [WebContentFilter::class, 'index']);
     Route::post('/admin/web-content-filter', [WebContentFilter::class, 'addWebsite']);
+    Route::get('/admin/web-content-filter/search/{key}', [SearchController::class, 'blockedWebsiteSearch']);
+    Route::delete('/admin/web-content-filter/{id}', [WebContentFilter::class, 'deleteWebsite']);
 
     Route::get('/auth/check-auth', [PendingAccountController::class, 'checkAuth']);
+
+    Route::get('/admin/dashboard', [DashboardController::class, 'index']);
+    Route::post('/auth/logout', [UserAuthController::class, 'logout']);
 
 });
 

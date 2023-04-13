@@ -47,4 +47,9 @@ class UserAuthController extends Controller
 
         return response(['user' => auth()->user(), 'access_token' => $token], 200);
     }
+
+    public function logout (Request $request) {
+        auth()->user()->token()->revoke();
+        return response(['message' => 'Successfully logged out'], 200);
+    }
 }

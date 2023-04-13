@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('operating_system_id')->constrained('operating_systems')->onUpdate('cascade')->onDelete('cascade')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('user_type', ['admin', 'student', 'faculty'])->default('student');
