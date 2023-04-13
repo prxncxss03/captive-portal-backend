@@ -25,7 +25,9 @@ use App\Http\Controllers\DashboardController;
 Route::post('/auth/register', [UserAuthController::class, 'register']);
 Route::post('/auth/login', [UserAuthController::class, 'login']);
 
-
+Route::get('test', function () {
+    return response(['message' => 'test'], 200);
+});
 Route::group(['middleware' => ['auth:api']], function () {
     //admin routes
     Route::get('/admin/pending-accounts', [PendingAccountController::class, 'index']);
